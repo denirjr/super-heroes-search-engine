@@ -3,13 +3,10 @@
     <mat-card-title-group>
       <mat-card-title>{{ heroResult.name }}</mat-card-title>
       <mat-card-subtitle>{{ heroResult.id }}</mat-card-subtitle>
-      <img
-        mat-card-lg-image
-        [ngSrc]="getImage(heroResult.thumbnail)"
-        width="500"
-        height="500"
-        alt="{{ heroResult.name }}"
-        priority
+      <app-img
+        [image]="heroResult.thumbnail | formatImg"
+        [alt]="heroResult.name"
+        [dimensions]="CARD_DIMENSIONS"
       />
     </mat-card-title-group>
   </mat-card-header>

@@ -25,8 +25,8 @@ import {
   mergeMap,
   tap,
 } from 'rxjs/operators';
-import { HeroCardComponent } from '../hero-card/hero-card.component';
 import { Data } from '../services/hero-model';
+import { HeroCardComponent } from './hero-card/hero-card.component';
 
 @Component({
   selector: 'app-hero-list',

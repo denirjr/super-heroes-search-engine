@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment.development';
 import { HeroModel } from './hero-model';
 
 export enum HeroSuffixEnum {
-  MOVIE = 'movie',
+  MOVIE = 'series',
   COMICS = 'comics',
 }
 
@@ -29,19 +29,14 @@ export class HeroesService {
     });
   }
 
-  public searchById(
-    id: string,
-    suffix?: HeroSuffixEnum
-  ): Observable<HeroModel> {
+  public searchById<T>(id: string, suffix?: HeroSuffixEnum): Observable<T> {
     const options = new HttpParams().set('apikey', environment.publicKey);
 
-    return this.http.get<HeroModel>(
+    return this.http.get<T>(
       `${this.ROOT_URL}characters/${id}${suffix ? '/' : ''}${
         suffix ? suffix : ''
       }`,
-      {
-        params: options,
-      }
+      { params: options }
     );
   }
 }

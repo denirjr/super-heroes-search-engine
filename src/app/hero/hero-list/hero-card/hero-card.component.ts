@@ -1,25 +1,25 @@
 import { Component, Input, output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { Data, Result, Thumbnail } from '../services/hero-model';
 import { NgOptimizedImage } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { Result, Thumbnail } from '../../services/hero-model';
+import { FormatImgPipe } from '../../../pipes/format-img.pipe';
+import { ImgComponent } from '../../../components/img/img.component';
 
 @Component({
   selector: 'app-hero-card',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, NgOptimizedImage],
+  imports: [MatCardModule, MatButtonModule, ImgComponent, FormatImgPipe],
   templateUrl: './hero-card.component.html',
   styleUrl: './hero-card.component.scss',
 })
 export class HeroCardComponent {
-  @Input() heroResult: Partial<Result> = {};
-  onClick = output<void>();
+  @Input({required: true}) heroResult!: Result;
+  protected onClick = output<void>();
 
-  public getImage(thumbnail: Thumbnail | undefined): string {
-    if (!thumbnail) {
-      return '';
-    }
-    return `${thumbnail.path}.${thumbnail.extension}`;
+  public readonly CARD_DIMENSIONS = {
+    width: "150",
+    height: "150",
   }
 
   public btnAction(): void {

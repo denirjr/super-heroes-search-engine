@@ -1,0 +1,19 @@
+<mat-card class="card-container">
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>{{ heroResult.name }}</mat-card-title>
+      <mat-card-subtitle>{{ heroResult.id }}</mat-card-subtitle>
+      <img
+        mat-card-lg-image
+        [ngSrc]="getImage(heroResult.thumbnail)"
+        width="500"
+        height="500"
+        alt="{{ heroResult.name }}"
+        priority
+      />
+    </mat-card-title-group>
+  </mat-card-header>
+  <mat-card-actions>
+    <button (click)="btnAction()" mat-button>Detalhe</button>
+  </mat-card-actions>
+</mat-card>

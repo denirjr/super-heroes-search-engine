@@ -2,16 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { finalize, map } from 'rxjs';
 import { ImgComponent } from '../../components/img/img.component';
+import { SpinnerComponent } from '../../components/spinner/spinner.component';
 import { FormatImgPipe } from '../../pipes/format-img.pipe';
-import { ComicModel, Result as ComicResults } from '../services/comics-model';
-import { MoviesModel, Result as MovieResults } from '../services/movies-model';
-import { Result } from '../services/hero-model';
+import { ComicModel, Result as ComicResults } from '../models/comics-model';
+import { Result } from '../models/hero-model';
 import { HeroSuffixEnum, HeroesService } from '../services/heroes.service';
-import { MatDividerModule } from '@angular/material/divider';
+import { Result as MovieResults, MoviesModel } from '../services/movies-model';
 
 @Component({
   selector: 'app-hero-detail',
@@ -22,8 +23,9 @@ import { MatDividerModule } from '@angular/material/divider';
     MatCardModule,
     MatButtonModule,
     MatDividerModule,
-    ImgComponent,
     FormatImgPipe,
+    ImgComponent,
+    SpinnerComponent,
   ],
   templateUrl: './hero-detail.component.html',
   styleUrl: './hero-detail.component.scss',
@@ -32,6 +34,7 @@ export class HeroDetailComponent {
   public result!: Result;
   public comics: ComicResults[] = [];
   public movies: MovieResults[] = [];
+  public spinnerAction = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,16 +56,24 @@ export class HeroDetailComponent {
   }
 
   private getComics(): void {
+    this.spinnerAction = true;
     this.heroService$
       .searchById<ComicModel>(this.result?.id.toString(), HeroSuffixEnum.COMICS)
-      .pipe(map((res) => res.data.results))
+      .pipe(
+        map((res) => res.data.results),
+        finalize(() => (this.spinnerAction = false))
+      )
       .subscribe((res) => (this.comics = res));
   }
 
   private getMovies(): void {
+    this.spinnerAction = true;
     this.heroService$
       .searchById<MoviesModel>(this.result?.id.toString(), HeroSuffixEnum.MOVIE)
-      .pipe(map((res) => res.data.results))
+      .pipe(
+        map((res) => res.data.results),
+        finalize(() => (this.spinnerAction = false))
+      )
       .subscribe((res) => (this.movies = res));
   }
 }

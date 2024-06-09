@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
-import { HeroModel } from './hero-model';
+import { HeroModel } from '../models/hero-model';
 
 export enum HeroSuffixEnum {
   MOVIE = 'series',

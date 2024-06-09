@@ -1,3 +1,10 @@
-<mat-toolbar>
+<mat-toolbar [color]="'primary'">
+  <button (click)="goHome()" mat-icon-button aria-label="rollback button icon">
+    <mat-icon
+      aria-hidden="false"
+      aria-label="home icon"
+      fontIcon="home"
+    ></mat-icon>
+  </button>
   <span>{{ title }}</span>
 </mat-toolbar>

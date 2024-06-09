@@ -1,24 +1,33 @@
-<mat-form-field>
-  <mat-label>Busque pelo seu heroi</mat-label>
-  <input
-    #inputSearch
-    (keyup)="searchHero(inputSearch.value)"
-    matInput
-    [formControl]="search"
-    required
-  />
-  @if (inputSearch.value) {
-  <button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
-    <mat-icon>close</mat-icon>
-  </button>
-  }
-</mat-form-field>
+<main class="search-container">
+  <mat-form-field>
+    <mat-label>Busque pelo seu heroi</mat-label>
+    <input
+      #inputSearch
+      (keyup)="searchHero(inputSearch.value)"
+      matInput
+      [formControl]="search"
+      required
+    />
+    @if (inputSearch.value) {
+    <button
+      (click)="clearSearch()"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </mat-form-field>
+</main>
 
-<main class="card-container">
+<article class="card-container">
   @for (result of (heroData$ | async)?.results; track $index) {
   <app-hero-card
     (onClick)="redirectToHeroDetail(result!.id.toString())"
     [heroResult]="result"
   />
   }
-</main>
+</article>
+
+<app-spinner [show]="spinnerAction"></app-spinner>

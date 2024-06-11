@@ -1,27 +1,44 @@
-# SuperHeroesSearchEngine
+# Super Heroes Search Engine
+Projeto desenvolvido com intuito de ser um centralizador de busca de heróis, assim fazendo integração com a api da marvel (https://developer.marvel.com/), assim retornando detalhes de cada herói com as seguintes informações:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.3.
+- Nome
+- Foto
+- Descrição
+- Participação em filmes / series
+- Participação em quadrinhos
 
-## Development server
+## 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### 📋 Pré-requisitos
+Para startar a app localmente em sua máquina, é importante ter privateKey e publicKey gerados no site https://developer.marvel.com/. Após gerada as keys, preencher cada uma das variaveis contidas nos arquivos environment.development.ts e environment.ts
 
-## Code scaffolding
+```
+node 18 + 
+Angular Cli global 17+
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 🔧 Instalação
 
-## Build
+```
+npm install
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🚀 Executando  localmente
 
-## Running unit tests
+```
+npm run start
+```
+E navegue para http://localhost:4200/
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## ⚙️ Executando os testes
 
-## Running end-to-end tests
+```
+npm run test 
+```
+Com [Karma](https://karma-runner.github.io)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🛠️ Construído com
 
-## Further help
+Mencione as ferramentas que você usou para criar seu projeto
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+* [Angular CLI](https://github.com/angular/angular-cli) version 17.2.3.

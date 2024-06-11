@@ -39,6 +39,4 @@ Com [Karma](https://karma-runner.github.io)
 
 ## 🛠️ Construído com
 
-Mencione as ferramentas que você usou para criar seu projeto
-
 * [Angular CLI](https://github.com/angular/angular-cli) version 17.2.3.

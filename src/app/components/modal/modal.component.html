@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>{{ data.subtitle }}</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    color="primary"
+    (click)="data.btn.action()"
+    mat-button
+    mat-dialog-close
+  >
+    {{ data.btn.title }}
+  </button>
+</mat-dialog-actions>

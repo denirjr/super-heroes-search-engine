@@ -14,9 +14,11 @@ import { HeroesService } from '../services/heroes.service';
 
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import {
+  catchError,
   debounceTime,
   distinctUntilChanged,
   filter,
@@ -25,10 +27,10 @@ import {
   mergeMap,
   tap,
 } from 'rxjs/operators';
+import { ModalComponent } from '../../components/modal/modal.component';
 import { SpinnerComponent } from '../../components/spinner/spinner.component';
 import { Data } from '../models/hero-model';
 import { HeroCardComponent } from './hero-card/hero-card.component';
-import { EMPTY_OBSERVER } from 'rxjs/internal/Subscriber';
 
 @Component({
   selector: 'app-hero-list',
@@ -36,6 +38,7 @@ import { EMPTY_OBSERVER } from 'rxjs/internal/Subscriber';
   imports: [
     CommonModule,
     HeroCardComponent,
+    ModalComponent,
     SpinnerComponent,
     MatFormFieldModule,
     MatInputModule,
@@ -55,7 +58,11 @@ export class HeroListComponent implements OnInit {
   public heroData$: Observable<Data> = EMPTY;
   public spinnerAction: boolean = false;
 
-  constructor(private heroService$: HeroesService, private router: Router) {}
+  constructor(
+    private heroService$: HeroesService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getHero();
@@ -66,27 +73,67 @@ export class HeroListComponent implements OnInit {
   }
 
   private getHero(): void {
-    const minSearchLength = 3;
+    const minLength = (name: string) => name.length >= 3;
 
     this.heroData$ = this.searchNotification$.pipe(
-      filter((name: string) => name.length >= minSearchLength),
+      filter(minLength),
       tap(() => (this.spinnerAction = true)),
       debounceTime(300),
       distinctUntilChanged(),
       mergeMap((name) =>
         this.heroService$.search(name).pipe(
           map((res) => res.data),
+          tap(this.alertWhenNoHeroes.bind(this)),
+          catchError(() => {
+            this.openErrorModal();
+            return of({} as Data);
+          }),
           finalize(() => (this.spinnerAction = false))
         )
       )
     );
   }
 
-  public clearSearch(): void {
-    this.search.reset();
+  private alertWhenNoHeroes(heroData: Data): void {
+    const noHeroesFound: boolean = heroData?.results?.every(
+      (eachResult) => eachResult === undefined
+    );
+
+    if (noHeroesFound) {
+      this.openNoHeroesDialogAlert();
+    }
+  }
+
+  private openNoHeroesDialogAlert(): void {
+    this.dialog.open(ModalComponent, {
+      data: {
+        title: 'Herói não encontrado!!!',
+        subtitle: 'Busque por algum heroi que exista!',
+        btn: {
+          title: 'Fechar',
+          action: () => this.clearSearch(),
+        },
+      },
+    });
+  }
+
+  private openErrorModal(): void {
+    this.dialog.open(ModalComponent, {
+      data: {
+        title: 'Erro ao buscar heroi!',
+        subtitle: 'Tente novamente mais tarde',
+        btn: {
+          title: 'Fechar',
+        },
+      },
+    });
   }
 
   public redirectToHeroDetail(id: string): void {
     this.router.navigate([`hero-detail/${id}`]);
+  }
+
+  public clearSearch(): void {
+    this.search.reset();
   }
 }

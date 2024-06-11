@@ -1,8 +1,8 @@
 import { Component, Input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { ImgComponent } from '../../../components/img/img.component';
-import { FormatImgPipe } from '../../../pipes/format-img.pipe';
+import { ImgComponent } from '../../../shared/components/img/img.component';
+import { FormatImgPipe } from '../../../shared/pipes/format-img.pipe';
 import { Result } from '../../models/hero-model';
 
 @Component({

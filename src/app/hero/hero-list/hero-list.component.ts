@@ -27,8 +27,8 @@ import {
   mergeMap,
   tap,
 } from 'rxjs/operators';
-import { ModalComponent } from '../../components/modal/modal.component';
-import { SpinnerComponent } from '../../components/spinner/spinner.component';
+import { ModalComponent } from '../../shared/components/modal/modal.component';
+import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
 import { Data } from '../models/hero-model';
 import { HeroCardComponent } from './hero-card/hero-card.component';
 
